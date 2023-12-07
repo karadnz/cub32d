@@ -4,11 +4,9 @@ void calculate_perpetual(Ray* ray);
 void calculate_step(Ray* ray, Player* player);
 void init_ray(Ray* ray, Player* player, double angle);
 
-
-
 void raycast(Game* game)
 {
-	tft.fillScreen(ST77XX_BLACK);
+	//tft.fillScreen(ST77XX_BLACK);
 
 	double angle_step = FOV / WIDTH; // ray count
 	double angle = game->player.dir - FOV / 2;
@@ -17,16 +15,6 @@ void raycast(Game* game)
 	{
 		Ray ray;
 
-		/*ray.dir.x = cos(angle);
-		ray.dir.y = sin(angle);
-
-		ray.delta_dist.x = fabs(1 / ray.dir.x);
-		ray.delta_dist.y = fabs(1 / ray.dir.y);
-
-		ray.p_map.x = (int)game->player.x;
-		ray.p_map.y = (int)game->player.y;
-
-		ray.hit = 0;*/
     init_ray(&ray, &(game->player), angle);
 		calculate_step(&ray, &(game->player));
 		calculate_perpetual(&ray);
@@ -34,14 +22,13 @@ void raycast(Game* game)
 		ray.perp_wall_dist = ray.perp_wall_dist * cos(game->player.dir - angle);
 
 		double wall_height = (1 / ray.perp_wall_dist) * HEIGHT;
-		// draw_line(game, x, wall_height, 0x00FF0000);
 
 		int start = (HEIGHT - wall_height) / 2;
 		int end = (HEIGHT + wall_height) / 2;
 
 		tft.drawLine(x, 0, x, start, ST77XX_BLUE);
 		tft.drawLine(x, start, x, end, ST77XX_RED);
-		// tft.drawLine(x, end, x, HEIGHT, ST77XX_RED);
+		tft.drawLine(x, end, x, HEIGHT, ST77XX_BLACK);
 	}
 }
 
