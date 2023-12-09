@@ -7,24 +7,22 @@
  *
  *************************************************************************/
 
-#include <Adafruit_GFX.h>	 // Core graphics library
-#include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
+
+#include <Adafruit_GFX.h>    // Core graphics library for rendering graphics on displays
+#include <Adafruit_ST7789.h> // Hardware-specific library for ST7789-based TFT displays
 
 // ST7789 TFT module connections
-#define TFT_DC 2  // TFT DC  pin is connected to NodeMCU pin D1 (GPIO5)
-#define TFT_RST 4 // TFT RST pin is connected to NodeMCU pin D2 (GPIO4)
-#define TFT_CS D8 // TFT CS  pin is connected to NodeMCU pin D8 (GPIO15)
-// initialize ST7789 TFT library with hardware SPI module
-// SCK (CLK) ---> NodeMCU pin D5 (GPIO14)
-// MOSI(DIN) ---> NodeMCU pin D7 (GPIO13)
+#define TFT_MISO 19 // Pin for Master In Slave Out for SPI communication
+#define TFT_MOSI 23 // Pin for Master Out Slave In for SPI communication
+#define TFT_SCLK 18 // Pin for Serial Clock for SPI communication
 
-#define TFT_MISO 19
-#define TFT_MOSI 23
-#define TFT_SCLK 18
-#define TFT_CS -1 // Not connected
-#define TFT_DC 2
-#define TFT_RST 4 // Connect reset to ensure display initialises
+#define TFT_CS   -1 // Chip Select pin, set to -1 if not used
+#define TFT_DC    2 // Data/Command pin to differentiate data and command transmissions
+#define TFT_RST   4 // Reset pin, connects to reset the display for proper initialization
+
+// ST7789 object
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
+
 
 float p = 3.1415926;
 
@@ -64,6 +62,7 @@ typedef struct
 
 	int side;
 	int hit;
+  double angle; //angle of loop
 	double perp_wall_dist;
 } Ray;
 
@@ -112,7 +111,11 @@ void loop()
 	{
 		previousMillis = currentMillis;
     ft_turn(&game.player);
+    unsigned long raycastStart = millis();
 		raycast(&game);
+    unsigned long raycastEnd = millis();
+    Serial.println("Time spent: "); //70 - 75
+    Serial.println(raycastEnd - raycastStart);
 	}
 }
 
