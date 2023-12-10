@@ -24,6 +24,13 @@
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 
 
+//draw buffer
+//#define SCREEN_WIDTH 240
+//#define SCREEN_HEIGHT 240
+//maybe convert to char and use as enum while drawing
+//uint16_t frameBuffer[SCREEN_WIDTH * SCREEN_HEIGHT];
+
+
 float p = 3.1415926;
 
 #include <math.h>
@@ -112,9 +119,9 @@ void loop()
 		previousMillis = currentMillis;
     ft_turn(&game.player);
     unsigned long raycastStart = millis();
-		raycast(&game);
+		raycast(game);
     unsigned long raycastEnd = millis();
-    Serial.println("Time spent: "); //70 - 75
+    Serial.println("Time spent: "); //70 - 75 (60 for draw)
     Serial.println(raycastEnd - raycastStart);
 	}
 }
