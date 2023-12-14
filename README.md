@@ -6,3 +6,4 @@ simple 3d game runs on esp32.
 - move using keypad
 - sound
 - save game state
+- texture support & proper scaling

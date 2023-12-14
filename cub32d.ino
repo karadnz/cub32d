@@ -1,20 +1,11 @@
-/**************************************************************************
- *
- * Interfacing ESP8266 NodeMCU with ST7789 TFT display (240x240 pixel).
- * Graphics test example.
- * This is a free software with NO WARRANTY.
- * https://simple-circuit.com/
- *
- *************************************************************************/
-
 
 #include <Adafruit_GFX.h>    // Core graphics library for rendering graphics on displays
 #include <Adafruit_ST7789.h> // Hardware-specific library for ST7789-based TFT displays
 
 // ST7789 TFT module connections
-#define TFT_MISO 19 // Pin for Master In Slave Out for SPI communication
+#define TFT_MISO 19 // Pin for Master In Slave Out for SPI communication BOS
 #define TFT_MOSI 23 // Pin for Master Out Slave In for SPI communication
-#define TFT_SCLK 18 // Pin for Serial Clock for SPI communication
+#define TFT_SCLK 18 // Pin for Serial Clock for SPI communication 
 
 #define TFT_CS   -1 // Chip Select pin, set to -1 if not used
 #define TFT_DC    2 // Data/Command pin to differentiate data and command transmissions
@@ -126,6 +117,7 @@ void loop()
 	}
 }
 
+//rotate test
 void	ft_turn(Player *player)
 {
 	player->dir -= 0.03;
