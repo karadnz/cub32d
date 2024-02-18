@@ -43,6 +43,8 @@ void init_ray(Ray& ray, const Player& player, double angle)
 	ray.angle = angle;
 
   calculate_step(ray, player);
+
+  ray.color = WALL;
 }
 
 bool is_hit(const Ray& ray)
@@ -73,6 +75,16 @@ void ray_step(Ray& ray)
 	}
 }
 
+//only color rn
+void determine_texture(Ray& ray, const Game& game)
+{
+
+  if (ray.side == 1) 
+  {
+    ray.color = WALL_2;
+  }
+
+}
 void calculate_perpetual(Ray& ray, const Game& game)
 {
 	while (ray.hit == 0)
@@ -86,7 +98,7 @@ void calculate_perpetual(Ray& ray, const Game& game)
 	else
 		ray.perp_wall_dist = ray.side_dist.y - ray.delta_dist.y;
 
-	// determine_texture()
+	determine_texture(ray, game);
 
   //correct fish eye
 	ray.perp_wall_dist = ray.perp_wall_dist * cos(game.player.dir - ray.angle);
@@ -126,7 +138,7 @@ void draw_line(const Ray& ray, int& x)
 	int start = (HEIGHT - wall_height) / 2;
 	int end = (HEIGHT + wall_height) / 2;
 
-	tft->drawLine(x, 0, x, start, ST77XX_BLUE);
-	tft->drawLine(x, start, x, end, ST77XX_RED);
-	tft->drawLine(x, end, x, HEIGHT, ST77XX_BLACK);
+	tft->drawLine(x, 0, x, start, CEILING);
+	tft->drawLine(x, start, x, end, ray.color);//ST77XX_RED //wall
+	tft->drawLine(x, end, x, HEIGHT, FLOOR);
 }

@@ -12,7 +12,7 @@
 #define TFT_DC 2  // Data/Command pin to di                                                                                                                                                                                                                                        tiate data and command transmissions
 #define TFT_RST 4 // Reset pin, connects to reset the display for proper initialization
 
-// FASTER
+// TEMP
 #define TFT_CS -1
 #define TFT_DC 2
 #define TFT_SCLK 18 // SCL
@@ -37,6 +37,15 @@ Adafruit_ST7789* tft = NULL;
 //#define SCREEN_HEIGHT 240
 // maybe convert to char and use as enum while drawing
 // uint16_t frameBuffer[SCREEN_WIDTH * SCREEN_HEIGHT];
+
+//COLOR
+//RRRRRGGGGGGBBBBB -> RGB 565
+//https://rgbcolorpicker.com/565
+
+#define FLOOR 0x0000
+#define WALL 0xe000
+#define WALL_2 0xc000
+#define CEILING 0x001d
 
 float p = 3.1415926;
 
@@ -78,6 +87,8 @@ typedef struct
 	int hit;
 	double angle; // angle of loop
 	double perp_wall_dist;
+
+  uint16_t color; //will change it to texture
 } Ray;
 
 typedef struct
@@ -114,7 +125,7 @@ void setup(void)
 	// tft.init(240, 240, SPI_MODE2); // Init ST7789 display 240x240 pixel
 
 	// if the screen is flipped, remove this command
-	tft->setRotation(2);
+	tft->setRotation(1);
 
 	Serial.println(F("Initialized"));
 
