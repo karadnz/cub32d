@@ -126,7 +126,7 @@ void draw_line(const Ray& ray, int& x)
 	int start = (HEIGHT - wall_height) / 2;
 	int end = (HEIGHT + wall_height) / 2;
 
-	tft.drawLine(x, 0, x, start, ST77XX_BLUE);
-	tft.drawLine(x, start, x, end, ST77XX_RED);
-	tft.drawLine(x, end, x, HEIGHT, ST77XX_BLACK);
+	tft->drawLine(x, 0, x, start, ST77XX_BLUE);
+	tft->drawLine(x, start, x, end, ST77XX_RED);
+	tft->drawLine(x, end, x, HEIGHT, ST77XX_BLACK);
 }
